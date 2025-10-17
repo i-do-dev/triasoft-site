@@ -1,0 +1,229 @@
+---
+const navLinks = [
+  { title: "Home", href: "/" },
+  { title: "About", href: "/about" },
+  { title: "Services", href: "/services" },
+  { title: "Team", href: "/team" },
+  { title: "Contact", href: "/contact" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!-- Fonts -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@700&family=Roboto+Condensed:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
+
+<header class="bg-white relative overflow-hidden">
+
+  <!-- ✅ MOBILE HEADER -->
+  <div class="lg:hidden w-full bg-white shadow-sm p-4 flex items-center justify-between">
+    <!-- Centered Logo Block -->
+    <div class="flex items-center gap-2">
+      <svg
+        width="44"
+        height="44"
+        viewBox="0 0 56 56"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden
+      >
+        <rect x="0" y="0" width="18" height="18" rx="2" fill="#3ad24d"></rect>
+        <rect x="22" y="0" width="18" height="18" rx="2" fill="#00a6a0"></rect>
+        <rect x="22" y="22" width="18" height="18" rx="2" fill="#19b7b3"></rect>
+      </svg>
+      <div class="flex flex-col">
+        <h1
+          class="text-xl text-[#0b3b46] leading-tight"
+          style="font-family:'Asap Condensed', sans-serif; font-weight:700;"
+        >
+          TRIASOFT SYSTEMS
+        </h1>
+        <span
+          class="text-xs text-black tracking-widest uppercase"
+          style="font-family:'Roboto Condensed', sans-serif;"
+        >
+          ENGINEERING DIGITAL EDGE
+        </span>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      id="menu-toggle"
+      class="p-2 rounded-md text-[#00697c] focus:outline-none"
+      aria-label="Toggle menu"
+    >
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        ></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ✅ Mobile Menu Links -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-white shadow-md px-6 py-3">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          "block py-2 text-black rounded hover:bg-gray-100",
+          currentPath === link.href ? "font-bold border-b-2 border-teal-500" : "",
+        ]}
+        style="font-family:'Roboto Condensed', sans-serif;"
+      >
+        {link.title}
+      </a>
+    ))}
+  </div>
+
+  <!-- ✅ DESKTOP HEADER (unchanged) -->
+  <div class="hidden lg:flex w-full items-stretch">
+    <!-- Left gradient section -->
+    <div class="flex justify-end w-1/2">
+      <div
+        class="flex justify-center gap-8 p-4 pr-10
+            bg-gradient-to-r from-teal-400 via-[#20b2aa] to-teal-400
+            rounded-br-[40px] shadow-lg items-center w-[90%] sm:w-[95%] lg:w-[100%]"
+      >
+        <nav
+          class="hidden lg:flex gap-8"
+          style="font-family: 'Roboto Condensed', sans-serif;"
+        >
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "nav-link relative text-white transition-all duration-300",
+                currentPath === link.href ? "after:w-full after:opacity-100" : "after:w-0 after:opacity-0",
+              ]}
+            >
+              {link.title}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </div>
+
+    <!-- Right gradient section -->
+    <div class="flex justify-start w-1/2">
+      <div
+        class="h-[58px] sm:h-[62px] lg:h-[20px] w-[90%] sm:w-[95%] lg:w-[100%]
+              bg-gradient-to-l from-[#00697c] via-[#00697c] to-[#00697c]
+              shadow-lg"
+      ></div>
+    </div>
+  </div>
+
+  <!-- ✅ Centered logo + title block (desktop) -->
+  <div class="max-w-screen-xl mx-auto py-10 hidden lg:flex flex-col items-center">
+    <div class="flex items-center gap-1">
+      <svg
+        width="56"
+        height="56"
+        viewBox="0 0 56 56"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden
+        class="flex-shrink-0"
+      >
+        <rect x="0" y="0" width="18" height="18" rx="2" fill="#3ad24d"></rect>
+        <rect x="22" y="0" width="18" height="18" rx="2" fill="#00a6a0"></rect>
+        <rect x="22" y="22" width="18" height="18" rx="2" fill="#19b7b3"></rect>
+      </svg>
+
+      <div class="flex flex-col items-start">
+        <h1
+          class="text-4xl leading-tight text-[#0b3b46]"
+          style="font-family:'Asap Condensed', sans-serif; font-weight:700;"
+        >
+          TRIASOFT SYSTEMS
+        </h1>
+        <span
+          class="text-sm text-black tracking-widest uppercase mt-2 pl-10"
+          style="font-family:'Roboto Condensed', sans-serif;"
+        >
+          ENGINEERING DIGITAL EDGE
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      height: 2px;
+      background-color: white;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+      opacity: 1;
+    }
+  </style>
+
+ <script is:inline>
+  (function () {
+    const MOBILE_MENU_ID = "mobile-menu";
+    const TOGGLE_ID = "menu-toggle";
+
+    function toggleMenu() {
+      const mobile = document.getElementById(MOBILE_MENU_ID);
+      if (!mobile) return;
+      mobile.classList.toggle("hidden");
+    }
+
+    function closeMenu() {
+      const mobile = document.getElementById(MOBILE_MENU_ID);
+      if (!mobile) return;
+      if (!mobile.classList.contains("hidden")) mobile.classList.add("hidden");
+    }
+
+    // Delegated click handler — survives DOM replacements
+    document.addEventListener("click", (ev) => {
+      const btn = ev.target.closest && ev.target.closest(`#${TOGGLE_ID}`);
+      if (btn) {
+        // clicked the hamburger (or an element inside it)
+        ev.preventDefault();
+        toggleMenu();
+        return;
+      }
+
+      // If a nav link inside the mobile menu was clicked => close menu
+      const link = ev.target.closest && ev.target.closest(`#${MOBILE_MENU_ID} a`);
+      if (link) {
+        // give a tiny delay so the click navigation starts, then close
+        // (closing immediately is fine too; this ensures UX is consistent)
+        setTimeout(closeMenu, 10);
+      }
+    }, true /* useCapture to catch early */);
+
+    // Also close menu on Escape key for accessibility
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape") closeMenu();
+    });
+
+    // Ensure menu is initially hidden if server rendered differently
+    document.addEventListener("DOMContentLoaded", () => {
+      const mobile = document.getElementById(MOBILE_MENU_ID);
+      if (mobile && !mobile.classList.contains("hidden")) {
+        mobile.classList.add("hidden");
+      }
+    });
+  })();
+</script>
+
+</header>

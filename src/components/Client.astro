@@ -1,0 +1,61 @@
+---
+const clients = [
+  { name: "Betterhomes", logo: "/logos/Curriki_logo_header.svg" },
+  { name: "Lexus", logo: "/logos/Curriki_logo_header.svg" },
+  { name: "Orange", logo: "/logos/Curriki_logo_header.svg" },
+  { name: "The New York Times", logo: "/logos/Curriki_logo_header.svg" },
+  { name: "SUBU", logo: "/logos/Curriki_logo_header.svg" },
+];
+---
+
+<section class="py-10 bg-white">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between">
+    <!-- Left Title -->
+    <div class="flex items-center gap-3 mb-6 sm:mb-0">
+      <h2 class="text-xl sm:text-2xl font-semibold text-black">Our Clients</h2>
+      <div class="h-9 w-[2px] bg-gray-400"></div>
+    </div>
+
+    <!-- Logos Slider -->
+    <div class="relative w-full overflow-hidden">
+      <div
+        class="flex animate-slide whitespace-nowrap"
+        style="animation-duration: 20s;"
+      >
+        {clients.concat(clients).map((client) => (
+          <div
+            class="flex-shrink-0 flex items-center justify-center mx-8  hover:grayscale-0 transition duration-300"
+          >
+            <img
+              src={client.logo}
+              alt={client.name}
+              class="h-10 sm:h-12 w-auto object-contain"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-slide {
+      animation: slide linear infinite;
+    }
+
+    @media (max-width: 768px) {
+      .animate-slide {
+        animation-duration: 25s;
+      }
+    }
+  </style>
+</section>

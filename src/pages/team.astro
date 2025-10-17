@@ -1,0 +1,74 @@
+---
+
+import Layout from '../layouts/Layout.astro';
+
+const team = [
+{
+name: "Maqeer Munir",
+title: "Co-Founder / CEO",
+image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=256&h=256&q=80",
+},
+{
+name: "Azam Khan",
+title: "Flutter and Web developer",
+image: "https://i.ibb.co/27nH5pZd/image.png",
+},
+{
+name: "Ahsan",
+title: "Backend Devloper",
+image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=256&h=256&q=80",
+},
+{
+name: "Lindsay Walton",
+title: "Front-end Developer",
+image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=256&h=256&q=80",
+},
+{
+name: "Courtney Henry",
+title: "Designer",
+image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=256&h=256&q=80",
+},
+{
+name: "Asim",
+title: "Director of Product",
+image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=256&h=256&q=80",
+},
+];
+---
+
+<Layout title="Teams">
+  <section class="bg-gray-50 py-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <!-- Left aligned heading -->
+      <div class="mb-16 text-left">
+        <!-- <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+          Meet Our Leadership
+        </h2>
+        <p class="mt-4 text-lg text-gray-600 max-w-2xl">
+          A passionate group of individuals driving innovation and delivering
+          excellence.
+        </p> -->
+      </div>
+
+
+  <!-- Grid layout -->
+  <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-2">
+    {team.map((member) => (
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-6 flex items-center gap-6">
+        <img
+          class="h-24 w-24 rounded-full object-cover shadow-md"
+          src={member.image}
+          alt={member.name}
+        />
+        <div>
+          <h3 class="text-xl font-semibold text-gray-900">{member.name}</h3>
+          <p class="text-indigo-600 font-medium">{member.title}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+
+  </section>
+</Layout>
