@@ -8,6 +8,7 @@ const navLinks = [
 ];
 
 const currentPath = Astro.url.pathname;
+import logo from "../assets/logo.png";
 ---
 
 <!-- Fonts -->
@@ -15,16 +16,24 @@ const currentPath = Astro.url.pathname;
   href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@700&family=Roboto+Condensed:wght@400;700&display=swap"
   rel="stylesheet"
 />
-
+<style>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
+</style>
 <header class="bg-white relative overflow-hidden">
-
   <!-- ✅ MOBILE HEADER -->
-  <div class="lg:hidden w-full bg-white shadow-sm p-4 flex items-center justify-between">
-    <!-- Centered Logo Block -->
-    <div class="flex items-center gap-2">
+  <div
+    class="lg:hidden w-full bg-white  shadow-sm p-4 flex items-center justify-between"
+  >
+    <div class="flex items-center">
       <svg
-        width="44"
-        height="44"
+        width="35"
+        height="38"
+        pb-5
         viewBox="0 0 56 56"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden
@@ -33,15 +42,15 @@ const currentPath = Astro.url.pathname;
         <rect x="22" y="0" width="18" height="18" rx="2" fill="#00a6a0"></rect>
         <rect x="22" y="22" width="18" height="18" rx="2" fill="#19b7b3"></rect>
       </svg>
-      <div class="flex flex-col">
+      <div class="flex flex-col leading-tight">
         <h1
-          class="text-xl text-[#0b3b46] leading-tight"
-          style="font-family:'Asap Condensed', sans-serif; font-weight:700;"
+          class="text-2xl text-[#0b3b46] font-bold"
+          style="font-family:'Asap Condensed', sans-serif;"
         >
           TRIASOFT SYSTEMS
         </h1>
         <span
-          class="text-xs text-black tracking-widest uppercase"
+          class="text-xs text-black uppercase tracking-widest"
           style="font-family:'Roboto Condensed', sans-serif;"
         >
           ENGINEERING DIGITAL EDGE
@@ -49,7 +58,6 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
 
-    <!-- Mobile Menu Button -->
     <button
       id="menu-toggle"
       class="p-2 rounded-md text-[#00697c] focus:outline-none"
@@ -65,91 +73,193 @@ const currentPath = Astro.url.pathname;
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"
-        ></path>
+          d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </button>
   </div>
 
-  <!-- ✅ Mobile Menu Links -->
-  <div id="mobile-menu" class="hidden lg:hidden bg-white shadow-md px-6 py-3">
-    {navLinks.map((link) => (
-      <a
-        href={link.href}
-        class:list={[
-          "block py-2 text-black rounded hover:bg-gray-100",
-          currentPath === link.href ? "font-bold border-b-2 border-teal-500" : "",
-        ]}
-        style="font-family:'Roboto Condensed', sans-serif;"
-      >
-        {link.title}
-      </a>
-    ))}
-  </div>
+ <!-- ✅ MOBILE MENU LINKS -->
 
-  <!-- ✅ DESKTOP HEADER (unchanged) -->
+
+<div
+  id="mobile-menu"
+  class="hidden lg:hidden bg-gradient-to-r from-teal-400 via-[#20b2aa] to-teal-400 shadow-md px-6 py-4 rounded-b-2xl flex flex-col space-y-2"
+>
+  {
+    navLinks.map((link) => {
+      const cleanPath = currentPath.replace(/\/+$/, "");
+      const cleanHref = link.href.replace(/\/+$/, "");
+
+      return (
+        <a
+          href={link.href}
+          class:list={[
+            // ✅ Common styles for all links
+            "relative text-[27px] font-semibold transition-all duration-300 px-3 py-1 rounded-md",
+
+            // ✅ Active (current page)
+            currentPath === link.href
+              ? "text-[#00697c]"
+              : currentPath === link.href && link.title === "Contact"
+              ? "bg-white text-[#00697c] border border-[#00697c] rounded-full px-2 py-1.5 shadow-md " // ✅ make inline-block
+              : link.title === "Contact"
+              ? "bg-[#00697c] text-white rounded-full px-2 py-1.5 hover:bg-white hover:text-[#00697c] border border-transparent transition-all duration-300  w-30" // ✅ make inline-block
+              : "text-white hover:text-[#00697c]",
+          ]}
+        >
+          {link.title}
+        </a>
+      );
+    })
+  }
+</div>
+
+
+
+  <!-- ✅ DESKTOP HEADER -->
   <div class="hidden lg:flex w-full items-stretch">
-    <!-- Left gradient section -->
+    <!-- Left Gradient Section -->
     <div class="flex justify-end w-1/2">
       <div
-        class="flex justify-center gap-8 p-4 pr-10
+        class="flex justify-center gap-10 p-4 pr-10
             bg-gradient-to-r from-teal-400 via-[#20b2aa] to-teal-400
             rounded-br-[40px] shadow-lg items-center w-[90%] sm:w-[95%] lg:w-[100%]"
       >
         <nav
-          class="hidden lg:flex gap-8"
-          style="font-family: 'Roboto Condensed', sans-serif;"
+          class="flex flex-wrap gap-6 xl:gap-10 items-center" style="font-family:'Roboto Condensed', sans-serif;"
         >
-          {navLinks.map((link) => (
-            <a
-              href={link.href}
-              class:list={[
-                "nav-link relative text-white transition-all duration-300",
-                currentPath === link.href ? "after:w-full after:opacity-100" : "after:w-0 after:opacity-0",
-              ]}
-            >
-              {link.title}
-            </a>
-          ))}
+          {
+            navLinks.map((link) => (
+              <a
+                href={link.href}
+                class:list={[
+                  // ✅ Common styles for all links
+                  "relative text-[27px] font-semibold transition-all duration-300 px-3 py-1 rounded-md",
+
+                  // ✅ Active (current page)
+                  currentPath === link.href
+                    ? "text-[#00697c]" // Active color (teal)
+                    : // ✅ Contact button active
+                      currentPath === link.href && link.title === "Contact"
+                      ? "bg-white text-[#00697c] border border-[#00697c] rounded-full px-4 py-2 shadow-md"
+                      : // ✅ Contact button (not active)
+                        link.title === "Contact"
+                        ? "bg-[#00697c] text-white rounded-full px-4 py-2 hover:bg-white hover:text-[#00697c] border border-transparent transition-all duration-300"
+                        : // ✅ Default non-active links
+                          "text-white hover:text-[#00697c]",
+                ]}
+              >
+                {link.title}
+              </a>
+            ))
+          }
         </nav>
       </div>
     </div>
 
-    <!-- Right gradient section -->
+    <!-- ✅ Right Section with Social Icons -->
     <div class="flex justify-start w-1/2">
       <div
-        class="h-[58px] sm:h-[62px] lg:h-[20px] w-[90%] sm:w-[95%] lg:w-[100%]
-              bg-gradient-to-l from-[#00697c] via-[#00697c] to-[#00697c]
-              shadow-lg"
-      ></div>
+        class="flex items-center justify-end pr-5 gap-6
+      py-3 <!-- ✅ Added top & bottom padding -->
+     h-[59px] <!-- ✅ Auto height to fit content -->
+      w-[90%] sm:w-[95%] lg:w-[100%]
+      bg-gradient-to-l from-[#00697c] via-[#00697c] to-[#00697c]
+      shadow-lg mb-2 "
+      >
+        <!-- Facebook -->
+        <a
+          href="#"
+          target="_blank"
+          aria-label="Facebook"
+          class="p-2 rounded-full hover:bg-white/10 transition"
+        >
+          <svg
+            class="w-9 h-9 text-white hover:text-teal-400 transition-colors"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.3 3h-1.9v7A10 10 0 0 0 22 12Z"
+            ></path>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a
+          href="#"
+          target="_blank"
+          aria-label="LinkedIn"
+          class="p-2 rounded-full hover:bg-white/10 transition"
+        >
+          <svg
+            class="w-9 h-9 text-white hover:text-teal-400 transition-colors"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5 2.5 2.5 0 0 1 4.98 3.5ZM3 9h4v12H3zM9 9h3.6v1.7h.1a4 4 0 0 1 3.6-2c3.8 0 4.5 2.5 4.5 5.8V21h-4v-6c0-1.4 0-3.3-2-3.3s-2.2 1.5-2.2 3.2V21H9z"
+            ></path>
+          </svg>
+        </a>
+
+        <!-- YouTube -->
+        <a
+          href="#"
+          target="_blank"
+          aria-label="YouTube"
+          class="p-2 rounded-full hover:bg-white/10 transition"
+        >
+          <svg
+            class="w-9 h-9 text-white hover:text-teal-400 transition-colors"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19.6 3.2H4.4A2.4 2.4 0 0 0 2 5.6v12.8A2.4 2.4 0 0 0 4.4 21h15.2a2.4 2.4 0 0 0 2.4-2.4V5.6a2.4 2.4 0 0 0-2.4-2.4ZM10 16.5v-9l6 4.5-6 4.5Z"
+            ></path>
+          </svg>
+        </a>
+
+        <!-- Twitter -->
+        <a
+          href="#"
+          target="_blank"
+          aria-label="Twitter"
+          class="p-2 rounded-full hover:bg-white/10 transition"
+        >
+          <svg
+            class="w-9 h-9 text-white hover:text-teal-400 transition-colors"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M23 3a10.9 10.9 0 0 1-3.14 1.54A4.48 4.48 0 0 0 22.4.36a9.1 9.1 0 0 1-2.88 1.1A4.52 4.52 0 0 0 16 0c-2.5 0-4.5 2.2-4.5 4.9 0 .4 0 .8.1 1.1A12.8 12.8 0 0 1 1.7.9a5.1 5.1 0 0 0-.6 2.5A5 5 0 0 0 3 7.2a4.2 4.2 0 0 1-2-.6v.1c0 2.3 1.6 4.2 3.7 4.7a4.4 4.4 0 0 1-2 .1 4.5 4.5 0 0 0 4.3 3.4A9 9 0 0 1 0 19.6a12.7 12.7 0 0 0 6.9 2A12.7 12.7 0 0 0 19.9 9v-.6A9.3 9.3 0 0 0 23 3Z"
+            ></path>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 
-  <!-- ✅ Centered logo + title block (desktop) -->
-  <div class="max-w-screen-xl mx-auto py-10 hidden lg:flex flex-col items-center">
-    <div class="flex items-center gap-1">
-      <svg
-        width="56"
-        height="56"
-        viewBox="0 0 56 56"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden
-        class="flex-shrink-0"
-      >
-        <rect x="0" y="0" width="18" height="18" rx="2" fill="#3ad24d"></rect>
-        <rect x="22" y="0" width="18" height="18" rx="2" fill="#00a6a0"></rect>
-        <rect x="22" y="22" width="18" height="18" rx="2" fill="#19b7b3"></rect>
-      </svg>
+  <!-- ✅ Center Logo Block -->
+  <div
+    class="max-w-screen-xl mx-auto py-10 hidden lg:flex items-center justify-center"
+  >
+    <div class="flex items-center">
+      <!-- ✅ Logo -->
+      <img src={logo.src} alt="Logo" class="w-14 h-15 mr-2.5 mb-4.5" />
 
-      <div class="flex flex-col items-start">
+      <!-- ✅ Text Block -->
+      <div class="flex flex-col items-end leading-tight text-right">
         <h1
-          class="text-4xl leading-tight text-[#0b3b46]"
-          style="font-family:'Asap Condensed', sans-serif; font-weight:700;"
+          class="text-7xl text-[#0b3b46] font-bold"
+          style="font-family:'Asap Condensed', sans-serif;"
         >
           TRIASOFT SYSTEMS
         </h1>
         <span
-          class="text-sm text-black tracking-widest uppercase mt-2 pl-10"
+          class="text-sm text-[20px] text-black tracking-widest uppercase mt-0.5"
           style="font-family:'Roboto Condensed', sans-serif;"
         >
           ENGINEERING DIGITAL EDGE
@@ -158,72 +268,60 @@ const currentPath = Astro.url.pathname;
     </div>
   </div>
 
-  <style>
-    .nav-link::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      height: 2px;
-      background-color: white;
-      transition: all 0.3s ease;
-    }
+  <script is:inline>
+    (function () {
+      const MOBILE_MENU_ID = "mobile-menu";
+      const TOGGLE_ID = "menu-toggle";
 
-    .nav-link:hover::after {
-      width: 100%;
-      opacity: 1;
-    }
-  </style>
-
- <script is:inline>
-  (function () {
-    const MOBILE_MENU_ID = "mobile-menu";
-    const TOGGLE_ID = "menu-toggle";
-
-    function toggleMenu() {
-      const mobile = document.getElementById(MOBILE_MENU_ID);
-      if (!mobile) return;
-      mobile.classList.toggle("hidden");
-    }
-
-    function closeMenu() {
-      const mobile = document.getElementById(MOBILE_MENU_ID);
-      if (!mobile) return;
-      if (!mobile.classList.contains("hidden")) mobile.classList.add("hidden");
-    }
-
-    // Delegated click handler — survives DOM replacements
-    document.addEventListener("click", (ev) => {
-      const btn = ev.target.closest && ev.target.closest(`#${TOGGLE_ID}`);
-      if (btn) {
-        // clicked the hamburger (or an element inside it)
-        ev.preventDefault();
-        toggleMenu();
-        return;
+      function toggleMenu() {
+        const mobile = document.getElementById(MOBILE_MENU_ID);
+        if (!mobile) return;
+        mobile.classList.toggle("hidden");
       }
 
-      // If a nav link inside the mobile menu was clicked => close menu
-      const link = ev.target.closest && ev.target.closest(`#${MOBILE_MENU_ID} a`);
-      if (link) {
-        // give a tiny delay so the click navigation starts, then close
-        // (closing immediately is fine too; this ensures UX is consistent)
-        setTimeout(closeMenu, 10);
+      function closeMenu() {
+        const mobile = document.getElementById(MOBILE_MENU_ID);
+        if (!mobile) return;
+        if (!mobile.classList.contains("hidden"))
+          mobile.classList.add("hidden");
       }
-    }, true /* useCapture to catch early */);
 
-    // Also close menu on Escape key for accessibility
-    document.addEventListener("keydown", (ev) => {
-      if (ev.key === "Escape") closeMenu();
-    });
+      // Delegated click handler — survives DOM replacements
+      document.addEventListener(
+        "click",
+        (ev) => {
+          const btn = ev.target.closest && ev.target.closest(`#${TOGGLE_ID}`);
+          if (btn) {
+            // clicked the hamburger (or an element inside it)
+            ev.preventDefault();
+            toggleMenu();
+            return;
+          }
 
-    // Ensure menu is initially hidden if server rendered differently
-    document.addEventListener("DOMContentLoaded", () => {
-      const mobile = document.getElementById(MOBILE_MENU_ID);
-      if (mobile && !mobile.classList.contains("hidden")) {
-        mobile.classList.add("hidden");
-      }
-    });
-  })();
-</script>
+          // If a nav link inside the mobile menu was clicked => close menu
+          const link =
+            ev.target.closest && ev.target.closest(`#${MOBILE_MENU_ID} a`);
+          if (link) {
+            // give a tiny delay so the click navigation starts, then close
+            // (closing immediately is fine too; this ensures UX is consistent)
+            setTimeout(closeMenu, 10);
+          }
+        },
+        true /* useCapture to catch early */,
+      );
 
+      // Also close menu on Escape key for accessibility
+      document.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") closeMenu();
+      });
+
+      // Ensure menu is initially hidden if server rendered differently
+      document.addEventListener("DOMContentLoaded", () => {
+        const mobile = document.getElementById(MOBILE_MENU_ID);
+        if (mobile && !mobile.classList.contains("hidden")) {
+          mobile.classList.add("hidden");
+        }
+      });
+    })();
+  </script>
 </header>
