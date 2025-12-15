@@ -1,22 +1,58 @@
-
 ---
+// Layout.astro
 import "../styles/tailwind.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import BaseHead from "../components/BaseHead.astro";
 import { ClientRouter } from "astro:transitions";
 
 const { title } = Astro.props;
-import logo from "../assets/logo.png"
 ---
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>{title ? title : "Triasoft Systems Engineering"}</title>
-    
-    <ClientRouter />
+<script is:inline>
+(function () {
+  const html = document.documentElement;
 
+  // Apply saved theme BEFORE page renders
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    html.classList.add("dark");
+  } else {
+    html.classList.remove("dark");
+  }
+
+  // Toggle on button click
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-theme-toggle]");
+    if (!btn) return;
+
+    html.classList.toggle("dark");
+    localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+  });
+
+  // Sync between tabs
+  window.addEventListener("storage", (e) => {
+    if (e.key === "theme") {
+      if (e.newValue === "dark") html.classList.add("dark");
+      else html.classList.remove("dark");
+    }
+  });
+
+  // ⭐ Fix: Re-apply theme after Astro swaps the page (no full reload)
+  document.addEventListener('astro:after-swap', () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") html.classList.add("dark");
+    else html.classList.remove("dark");
+  });
+
+})();
+</script>
+
+  <meta charset="UTF-8" />
+
+  <title>{title ? title : "Triasoft Systems Engineering"}</title>
+  <ClientRouter />
 <link
   rel="icon"
   type="image/svg+xml"
@@ -30,41 +66,19 @@ import logo from "../assets/logo.png"
       
     </svg>"
 />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
         name="description"
         content="TRIASOFT SYSTEMS ENGINEERING — Building robust, secure, and scalable software solutions."
     />
-</head>
-
-<!-- <head>
-  <meta charset="UTF-8" />
-  <title>{title ? title : "Triasoft Systems Engineering"}</title>
-  <ClientRouter />
-
+  <!-- Apply theme early to avoid FOUC -->
  
-  <link rel="icon" type="image/png" href={logo.src} sizes="5x5" />
-  <link rel="apple-touch-icon" href={logo.src} sizes="64x64" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="TRIASOFT SYSTEMS ENGINEERING — Building robust, secure, and scalable software solutions."
-  />
-</head> -->
-
-
-  <body>
-    <Header />
-
-    <!-- Show the big colored title bar -->
-    <BaseHead title={title} />
-
-    <main class="min-h-screen">
-      <slot />
-    </main>
-
-    <Footer />
-  </body>
+</head>
+<body class="min-h-screen bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark transition-colors duration-300">
+  <Header />
+  <main class="min-h-screen">
+    <slot />
+  </main>
+  <Footer />
+</body>
 </html>

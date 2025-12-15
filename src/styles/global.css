@@ -1,1 +1,44 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Light/Dark Defaults */
+html, body {
+  @apply transition-colors duration-300;
+}
+
+body {
+  @apply bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark;
+}
+
+/* Headings & Text Defaults */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold text-gray-900 dark:text-white;
+}
+
+p, li, span, a {
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+/* Header and Footer */
+header, footer {
+  @apply bg-header-light text-text-light dark:bg-header-dark dark:text-text-dark transition-colors duration-300;
+}
+
+/* Links inside header/footer */
+header a, footer a {
+  @apply text-text-light dark:text-text-dark transition-colors duration-300;
+}
+
+/* Buttons */
+.theme-toggle-btn {
+  @apply bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-300;
+}
+
+/* Override hardcoded inline colors in Header/Footer using utility classes */
+.text-primary-light {
+  @apply text-primary-light dark:text-primary-dark;
+}
+.bg-primary-light {
+  @apply bg-primary-light dark:bg-primary-dark;
+}

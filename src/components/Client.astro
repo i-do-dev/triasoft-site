@@ -8,12 +8,13 @@ const clients = [
 ];
 ---
 
-<section class="py-10 bg-white">
+<section class="py-10 bg-background-light dark:bg-background-dark transition-colors duration-300">
   <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between">
+    
     <!-- Left Title -->
     <div class="flex items-center gap-3 mb-6 sm:mb-0">
-      <h2 class="text-xl sm:text-2xl font-semibold text-black">Our Clients</h2>
-      <div class="h-9 w-[2px] bg-gray-400"></div>
+      <h2 class="text-xl sm:text-2xl font-semibold text-text-light dark:text-text-dark">Our Clients</h2>
+      <div class="h-9 w-[2px] bg-gray-400 dark:bg-gray-600"></div>
     </div>
 
     <!-- Logos Slider -->
@@ -24,7 +25,7 @@ const clients = [
       >
         {clients.concat(clients).map((client) => (
           <div
-            class="flex-shrink-0 flex items-center justify-center mx-8  hover:grayscale-0 transition duration-300"
+            class="flex-shrink-0 flex items-center justify-center mx-8 hover:grayscale-0 transition duration-300"
           >
             <img
               src={client.logo}
@@ -40,12 +41,8 @@ const clients = [
 
   <style>
     @keyframes slide {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     .animate-slide {
